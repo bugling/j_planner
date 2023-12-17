@@ -6,8 +6,8 @@ export const ProjectList = (props) => {
 
     return (
         <>
-            <div class='flex min-h-screen items-center justify-center px-24'>
-                <div class="mt-8 grid grid-cols-2 gap-6 md:grid-cols-3 w-1/2">
+            <div className='flex min-h-screen items-center justify-center px-24'>
+                <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-3 w-1/2">
                     <ProjectItem />
                     <ProjectItem />
                     <ProjectItem />
