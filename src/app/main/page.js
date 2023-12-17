@@ -4,13 +4,22 @@ import KanbanBoard from '../component/kanban/kanban_board';
 import TodoList from '../component/todo/todo_list'
 
 export const MainPage = (props) => {
+    const handleApiCall = async()=>{
+        try {
+            const response = await fetch("api/hello");
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.log("error calling API : ",error)
+        }
+    }
     return (
         <>
-            <div class="flex flex-row">
+            <div className="flex flex-row" onClick={handleApiCall}>
                 <div>
                     <SidebarList />
                 </div>
-                <div class="flex flex-col w-full">
+                <div className="flex flex-col w-full">
                     <KanbanBoard />
                     <TodoList />
                 </div>
