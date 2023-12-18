@@ -6,23 +6,10 @@ import KanbanBoard from '../component/kanban/kanban_board';
 import TodoList from '../component/todo/todo_list'
 
 export const MainPage = (props) => {
-    const handleApiCall = async()=>{
-        try {
-            await fetch("http://localhost:8080/", { cache: 'no-store' })
-                .then(res => {
-                    if(!res.ok){
-                        throw new Error(`HTTP error! Status: ${res.status}`);
-                    }
-                    return res.json();
-                })
-                .then(data => {
-                    console.log("data", data);
-                })
-                .catch(error => console.log(error));
-        } catch (error) {
-            console.log("error calling API : ",error)
-        }
-    }
+    const handleApiCall = fetch('/api/product')
+                            .then((res) => console.logres.json())
+                            .then((data) => console.log(data));
+
     return (
         <>
             <div className="flex flex-row" onClick={handleApiCall}>
