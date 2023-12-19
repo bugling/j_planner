@@ -7,17 +7,17 @@ export const ProjectPage = (props) => {
 
     return (
         <> 
-            <div class="flex justify-end"> 
+            <div className="flex justify-end"> 
                 <Link href="/login" className="p-2">
                     <button
-                        class="w-1/8 bg-blue-600 text-white p-2 rounded
+                        className="w-1/8 bg-blue-600 text-white p-2 rounded
                         hover:bg-blue-400 focus:outline-none focus:shadow-outline-blue">
                         로그인
                     </button>
                 </Link>
                 <Link href="/sign_up" className="p-2">
                     <button
-                        class="w-1/8 bg-blue-600 text-white p-2 rounded
+                        className="w-1/8 bg-blue-600 text-white p-2 rounded
                         hover:bg-blue-400 focus:outline-none focus:shadow-outline-blue">
                         회원가입
                     </button>
