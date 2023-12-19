@@ -6,7 +6,7 @@ export const TodoItem = (props) => {
     return (
         <>
             <li
-            class="
+            className="
                 flex
                 items-center
                 justify-between
@@ -16,11 +16,11 @@ export const TodoItem = (props) => {
                 rounded
             "
             >
-                <label class="flex items-center">
-                    <input type="checkbox" class="mr-2 form-checkbox" />
+                <label className="flex items-center">
+                    <input type="checkbox" className="mr-2 form-checkbox" />
                     <span>할 일 1</span>
                 </label>
-                <button class="text-red-500">삭제</button>
+                <button className="text-red-500">삭제</button>
             </li>
         </>
     )

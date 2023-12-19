@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import schema from './schema';
-
 const conn = {
     host : "localhost",
-    port : "3308",
+    port : "3306",
     user : "root",
-    password : "2306",
-    database : "jpl"
+    password : "1234",
+    database : "jp"
 }
 
 export const handleMySql = async () =>{
@@ -19,24 +18,24 @@ export async function GET(NextRequest, { params }) {
     await connection.connect();
 
     let sql = "select * from tb_jpl_project";
-    let result ;
+    let result;
+    const query = connection.query(sql, function(err, data){
 
-    connection.query(sql, function(err, data){
         if(err) console.log(err);
         else {
-          console.log(data)
+            
             result = data;
-          
         }
       });
-      connection.end();
-      return result;
-    // return NextResponse.json([
-    //     {id: 1, name: "Apple", price: 2.5},
-    //     {id: 2, name: "Bread", price: 3.5},
-    // ]);
-}
 
+      console.log(query);
+
+       connection.end();
+
+     return NextResponse.json({data:result});
+     
+}
+/*
 export async function POST(NextRequest) {
     const body = await NextRequest.json();
 
@@ -50,4 +49,4 @@ export async function POST(NextRequest) {
         name: body.name,
         price: body.price,
     })
-}
+}*/

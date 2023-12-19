@@ -1,18 +1,17 @@
-"use client";
 
 import React from 'react'
 import SidebarList from '../component/sidebar/sidebar_list';
 import KanbanBoard from '../component/kanban/kanban_board';
 import TodoList from '../component/todo/todo_list'
 
-export const MainPage = (props) => {
-    const handleApiCall = fetch('/api/product')
+export const  MainPage = async (props) => {
+    const handleApiCall = await fetch('http://localhost:3000/api/product')
                             .then((res) => res.json())
                             .then((data) => console.log(data));
 
     return (
         <>
-            <div className="flex flex-row" onClick={() => handleApiCall}>
+            <div className="flex flex-row">
                 <div>
                     <SidebarList />
                 </div>
