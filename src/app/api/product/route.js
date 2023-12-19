@@ -8,37 +8,57 @@ const conn = {
     database : "jp"
 }
 
+// lodash의 cloneDeep 함수를 사용하여 깊은 복사
+const _ = require('lodash')
+
 export const handleMySql = async () =>{
     
 }
 
 export async function GET(NextRequest, { params }) {
     const mysql = require("mysql2");
+
     const connection = mysql.createConnection(conn);
-    await connection.connect();
+    
+    // 연결을 Promise로 감싸서 await 사용
+    await new Promise((resolve, reject) => {
+        connection.connect((err) => {
+            if (err) {
+                console.error('MySQL connection error:', err);
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
 
     let sql = "select * from tb_jpl_project";
     let result;
-    const query = connection.query(sql, function(err, data){
 
-        if(err) console.log(err);
-        else {
-            
-            result = data;
-        }
-      });
+    // lodash의 cloneDeep 함수를 사용하여 깊은 복사
+    await new Promise((resolve, reject) => {
+        const query = connection.query(sql, function(err, data){
 
-      console.log(query);
+            if(err){
+                console.log('에러났음');
+                console.log(err);
+            }
+            else {
+                result = data;
+                resolve();
+            }
+        });
+    });
 
-       connection.end();
+    console.log(result);
+    connection.end();
 
-     return NextResponse.json({data:result});
-     
+    return NextResponse.json({result});
 }
-/*
+
 export async function POST(NextRequest) {
     const body = await NextRequest.json();
-
+    console.log('ㅎㅊㄷ');
     const validation = schema.safeParse(body);
     if(!validation.success) {
         return NextResponse.json(validation.error.errors, {status: 400});
@@ -49,4 +69,4 @@ export async function POST(NextRequest) {
         name: body.name,
         price: body.price,
     })
-}*/
+}

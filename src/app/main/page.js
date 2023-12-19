@@ -1,17 +1,35 @@
 
+'use client'
+
 import React from 'react'
 import SidebarList from '../component/sidebar/sidebar_list';
 import KanbanBoard from '../component/kanban/kanban_board';
 import TodoList from '../component/todo/todo_list'
 
-export const  MainPage = async (props) => {
-    const handleApiCall = await fetch('http://localhost:3000/api/product')
+const checkEnvironment = () => {
+    let base_url =
+    process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://example.com";
+
+    return base_url;
+};
+
+export const  MainPage = (props) => {
+
+    const handleApiCall = fetch(checkEnvironment().concat("/api/product"),{
+                            method: 'GET',
+                            headers: {
+                            'Content-Type': 'application/json'
+                            },    
+                            body: JSON.stringify({})                       
+                            })
                             .then((res) => res.json())
                             .then((data) => console.log(data));
 
     return (
         <>
-            <div className="flex flex-row">
+            <div className="flex flex-row" onClick={() => {handleApiCall}}>
                 <div>
                     <SidebarList />
                 </div>
