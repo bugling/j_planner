@@ -7,12 +7,12 @@ import TodoList from '../component/todo/todo_list'
 
 export const MainPage = (props) => {
     const handleApiCall = fetch('/api/product')
-                            .then((res) => console.logres.json())
+                            .then((res) => res.json())
                             .then((data) => console.log(data));
 
     return (
         <>
-            <div className="flex flex-row" onClick={handleApiCall}>
+            <div className="flex flex-row" onClick={() => handleApiCall}>
                 <div>
                     <SidebarList />
                 </div>
