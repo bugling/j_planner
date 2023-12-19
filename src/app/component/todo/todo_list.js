@@ -5,11 +5,11 @@ export const TodoList = (props) => {
 
     return (
         <>
-             <div class="bg-gray-100 flex items-center justify-center">
-                <div class="bg-white p-8 rounded-lg shadow-md w-full">
-                    <h1 class="text-2xl font-bold mb-6">To-Do 리스트</h1>
+             <div className="bg-gray-100 flex items-center justify-center">
+                <div className="bg-white p-8 rounded-lg shadow-md w-full">
+                    <h1 className="text-2xl font-bold mb-6">To-Do 리스트</h1>
         
-                    <ul class="mb-4 grid grid-cols-3 gap-2">
+                    <ul className="mb-4 grid grid-cols-3 gap-2">
                         <TodoItem />
                         <TodoItem />
                         <TodoItem />
@@ -19,13 +19,13 @@ export const TodoList = (props) => {
                         <TodoItem />
                     </ul>
             
-                    <div class="flex justify-end">
-                        <label class="flex items-center w-1/2">
+                    <div className="flex justify-end">
+                        <label className="flex items-center w-1/2">
                         <input
                             type="text"
                             id="newTask"
                             placeholder="새로운 할 일 추가"
-                            class="
+                            className="
                             flex-1
                             p-2
                             border border-gray-300
@@ -34,7 +34,7 @@ export const TodoList = (props) => {
                             "
                         />
                         <button
-                            class="
+                            className="
                             bg-blue-500
                             text-white
                             p-2
