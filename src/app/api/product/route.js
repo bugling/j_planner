@@ -8,9 +8,6 @@ const conn = {
     database : "jp"
 }
 
-// lodash의 cloneDeep 함수를 사용하여 깊은 복사
-const _ = require('lodash')
-
 export const handleMySql = async () =>{
     
 }
