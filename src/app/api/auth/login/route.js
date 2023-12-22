@@ -96,7 +96,8 @@ export async function POST(NextRequest) {
         });
     });
 
-    if(result === null) {
+    // 쿼리 결과가 빈 배열이면 처리
+    if (Array.isArray(result) && result.length === 0) {
         sql = `insert into 'tb_jpl_user' ('JPL_USER_ID', 'JPL_USER_PW', 'JPL_USER_PHONE', 'DEL_YN', 'JOIN_OUT_DATE', 'JPL_FRRG_TS', 'JPL_FRRG_NM', 'JPL_LSMD_TS', 'JPL_LSMD_NM') values(${user.id},'1','010-1111-1111','N','',${user.connected_at},'bbs',${user.connected_at},'bbs');
         `;
 
