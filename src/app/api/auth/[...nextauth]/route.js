@@ -13,6 +13,9 @@ const handler = NextAuth({
         /*signIn 이후 실행*/
 		async session({ session }) {
 
+            return session;
+
+            /**
             console.log(`여기 탓음!!!!`);
 
 			const sessionUser = await User.findOne({
@@ -20,12 +23,11 @@ const handler = NextAuth({
 			});
 			session.user.id = sessionUser._id;
 			return session;
+             */
+
+
 		},
 		async signIn({ profile }) {
-
-            // const useExists = 회원정보를 찾는 로직 email을 return ;
-
-            console.log(profile);
 
 			try {
                 

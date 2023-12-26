@@ -8,7 +8,13 @@ import Image from 'next/image';
 
 export const ProjectPage = (props) => {
 
-    const {data:session} = true; // useSession();
+    const {data:session} = useSession();
+
+    let obj = useSession();
+    let strJson = JSON.stringify(obj);
+
+    console.log(`세션 있니?,   ${strJson}`);
+
     //const session = {user:{image:''}}
     return (
         <> 
