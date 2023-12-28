@@ -13,9 +13,8 @@ export const ProjectPage = (props) => {
     let obj = useSession();
     let strJson = JSON.stringify(obj);
 
-    console.log(`세션 있니?,   ${strJson}`);
+    console.log(`in ProjectPage // 세션 있니?,   ${strJson}`);
 
-    //const session = {user:{image:''}}
     return (
         <> 
 
@@ -23,25 +22,23 @@ export const ProjectPage = (props) => {
                 session ?
                 <div className="flex justify-end"> 
                     <Image src={session.user.image} alt='useimage' width={40} height={40} className='rounded-full object-contain hidden sm:block'/>
-                    <Link href="/login" className="p-2">
+                    
                         <button
-                            onClick={() => signOut({callbackUrl:'/'})}
+                            onClick={()=>signOut({callbackUrl:'/'})}
                             className="w-1/8 bg-blue-600 text-white p-2 rounded
                             hover:bg-blue-400 focus:outline-none focus:shadow-outline-blue">
                             로그아웃
                         </button>
-                    </Link>
+                    
                 </div>
                 :
                 <div className="flex justify-end"> 
-                    <Link href="/login" className="p-2">
-                        <button
-                            onClick={()=>signIn({callbackUrl:'/'})}
-                            className="w-1/8 bg-blue-600 text-white p-2 rounded
-                            hover:bg-blue-400 focus:outline-none focus:shadow-outline-blue">
-                            로그인
-                        </button>
-                    </Link>
+                    <button
+                        onClick={()=>signIn({callbackUrl:'/'})}
+                        className="w-1/8 bg-blue-600 text-white p-2 rounded
+                        hover:bg-blue-400 focus:outline-none focus:shadow-outline-blue">
+                        로그인
+                    </button>
                     <Link href="/sign_up" className="p-2">
                         <button
                             className="w-1/8 bg-blue-600 text-white p-2 rounded
@@ -57,3 +54,6 @@ export const ProjectPage = (props) => {
 }
 
 export default ProjectPage;
+
+// <Link href="/api/auth/signout" className="p-2">
+// </Link>

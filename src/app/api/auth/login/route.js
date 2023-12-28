@@ -8,21 +8,15 @@ const conn = {
 }
 
 
-let mysql = '';
-let connection = '';
+const mysql = require("mysql2");
+const connection = mysql.createConnection(conn);
 let body = '';
 
-export const handleMySql = async () =>{
-    
-}
-
-export async function GET(NextRequest, { params }) {
-    
-    mysql = require("mysql2");
-    connection = mysql.createConnection(conn);
-    
-    // 연결을 Promise로 감싸서 await 사용
-    await new Promise((resolve, reject) => {
+/**
+ * DB 연결
+ *  */ 
+async function connectToMySQL() {
+    return new Promise((resolve, reject) => {
         connection.connect((err) => {
             if (err) {
                 console.error('MySQL connection error:', err);
@@ -32,24 +26,44 @@ export async function GET(NextRequest, { params }) {
             }
         });
     });
+}
 
-    let sql = "select jpl_user_id from tb_jpl_project";
-    let result;
-
-    // lodash의 cloneDeep 함수를 사용하여 깊은 복사
-    await new Promise((resolve, reject) => {
-        const query = connection.query(sql, function(err, data){
-
-            if(err){
-                console.log('에러났음');
+/**
+ * 쿼리 실행
+ *  */ 
+async function executeQuery(sql) {
+    return new Promise((resolve, reject) => {
+        const query = connection.query(sql, function (err, data) {
+            if (err) {
                 console.log(err);
-            }
-            else {
+                reject(err);
+            } else {
                 result = data;
                 resolve();
             }
         });
     });
+}
+
+
+export async function GET(NextRequest, { params }) {
+    
+    try {
+        await connectToMySQL();
+        console.log('Connected to MySQL successfully!');
+    } catch (error) {
+        console.error('Error connecting to MySQL:', error);
+    }
+
+    let sql = "select jpl_user_id from tb_jpl_project";
+    let result;
+
+    try {
+        await executeQuery(sql);
+        console.log('Query executed successfully:', result);
+    } catch (error) {
+        console.error('Error executing query:', error);
+    }
 
     console.log(result);
     connection.end();
@@ -60,42 +74,30 @@ export async function GET(NextRequest, { params }) {
 
 export async function POST(NextRequest) {    
  
-    mysql = require("mysql2");
-    connection = mysql.createConnection(conn);
+    
     body = await NextRequest.json();
 
     console.log(body);
 
     const user_id       = body.id;
 
-    // 연결을 Promise로 감싸서 await 사용
-    await new Promise((resolve, reject) => {
-        connection.connect((err) => {
-            if (err) {
-                console.error('MySQL connection error:', err);
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
+    try {
+        await connectToMySQL();
+        console.log('Connected to MySQL successfully!');
+    } catch (error) {
+        console.error('Error connecting to MySQL:', error);
+    }
 
     let sql = `SELECT JPL_USER_ID FROM TB_JPL_USER WHERE JPL_USER_ID = ${user_id}`;
     
     let result;
 
-    await new Promise((resolve, reject) => {
-        const query = connection.query(sql, function(err, data){
-
-            if(err){
-                console.log(err);
-            }
-            else {
-                result = data;
-                resolve();
-            }
-        });
-    });
+    try {
+        await executeQuery(sql);
+        console.log('Query executed successfully:', result);
+    } catch (error) {
+        console.error('Error executing query:', error);
+    }
 
     // 쿼리 결과가 빈 배열이면 처리
     if (Array.isArray(result) && result.length === 0) {
@@ -105,41 +107,31 @@ export async function POST(NextRequest) {
         connected_at = connected_at.replace('T', ' ');
         connected_at = connected_at.replace('Z', '');
 
-        sql = `insert into tb_jpl_user (JPL_USER_ID, JPL_USER_PW, JPL_USER_PHONE, DEL_YN, JOIN_OUT_DATE, JPL_FRRG_TS, JPL_FRRG_NM, JPL_LSMD_TS, JPL_LSMD_NM) values('${user_id}','1','010-1111-1111','N','','${connected_at}','bbs','${connected_at}','bbs');
+        sql = `insert into tb_jpl_user (JPL_USER_ID, JPL_USER_PW, JPL_USER_PHONE, DEL_YN, JOIN_OUT_DATE, JPL_FRRG_TS, JPL_FRRG_NM, JPL_LSMD_TS, JPL_LSMD_NM)`
+        sql += `values('${user_id}','1','010-1111-1111','N','','${connected_at}','bbs','${connected_at}','bbs');
         `;
 
-        await new Promise((resolve, reject) => {
-            const query = connection.query(sql, function(err, data){
-    
-                if(err){
-                    console.log(err);
-                }
-                else {
-                    resolve();
-                }
-            });
-        });
+        try {
+            await executeQuery(sql);
+            console.log('Query executed successfully:', result);
+        } catch (error) {
+            console.error('Error executing query:', error);
+        }
     } else {
 
-        console.log('왜 여기 타니????');
+        console.log('회원 존재함!!');
     }
 
 
     sql = `SELECT JPL_USER_ID FROM TB_JPL_USER WHERE JPL_USER_ID = ${user_id}`;
 
 
-    await new Promise((resolve, reject) => {
-        const query = connection.query(sql, function(err, data){
-
-            if(err){
-                console.log(err);
-            }
-            else {
-                result = data;
-                resolve();
-            }
-        });
-    });
+    try {
+        await executeQuery(sql);
+        console.log('Query executed successfully:', result);
+    } catch (error) {
+        console.error('Error executing query:', error);
+    }
 
     console.log(result);
     connection.end();

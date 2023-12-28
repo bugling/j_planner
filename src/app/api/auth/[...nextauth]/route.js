@@ -48,6 +48,28 @@ const handler = NextAuth({
 				return false;
 			}
 		},
+
+        async signOut({ profile }) {
+
+			try {
+                
+                const handleApiCall = fetch(checkEnvironment().concat("/api/auth/logout"),{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },    
+                        body: JSON.stringify(profile)                       
+                    })
+                    .then((res) => res.json())
+                    .then((data) => console.log(data));
+
+                return true;
+
+			} catch (error) {
+				console.log(error);
+				return false;
+			}
+		},
 	},
 });
 

@@ -10,7 +10,7 @@ const nextConfig = {
     //   },
 
     images: {
-        domains: ["http://k.kakaocdn.net/dn/blIip2/btszLjEfPWE/NJhqrFf1cmeuwNwAkWTHgk/img_640x640.jpg"], 
+      domains: ['k.kakaocdn.net'], 
       },
 }
 
