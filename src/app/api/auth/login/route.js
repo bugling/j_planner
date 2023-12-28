@@ -47,34 +47,14 @@ async function executeQuery(sql) {
 
 
 export async function GET(NextRequest, { params }) {
-    
-    try {
-        await connectToMySQL();
-        console.log('Connected to MySQL successfully!');
-    } catch (error) {
-        console.error('Error connecting to MySQL:', error);
-    }
 
-    let sql = "select jpl_user_id from tb_jpl_project";
     let result;
-
-    try {
-        await executeQuery(sql);
-        console.log('Query executed successfully:', result);
-    } catch (error) {
-        console.error('Error executing query:', error);
-    }
-
-    console.log(result);
-    connection.end();
 
     return NextResponse.json({result});
 }
 
 
 export async function POST(NextRequest) {    
- 
-    
     body = await NextRequest.json();
 
     console.log(body);
@@ -92,15 +72,24 @@ export async function POST(NextRequest) {
     
     let result;
 
-    try {
-        await executeQuery(sql);
-        console.log('Query executed successfully:', result);
-    } catch (error) {
-        console.error('Error executing query:', error);
-    }
+    new Promise((resolve, reject) => {
+        const query = connection.query(sql, function (err, data) {
+            if (err) {
+                console.log(err);
+                reject(err);
+            } else {
+                result = data;
+                resolve();
+            }
+        });
+    });
 
     // 쿼리 결과가 빈 배열이면 처리
     if (Array.isArray(result) && result.length === 0) {
+
+
+        // 전화번호, 
+
 
         let connected_at    = body.connected_at;    // 2023-12-21T07:19:25Z
 
@@ -111,12 +100,17 @@ export async function POST(NextRequest) {
         sql += `values('${user_id}','1','010-1111-1111','N','','${connected_at}','bbs','${connected_at}','bbs');
         `;
 
-        try {
-            await executeQuery(sql);
-            console.log('Query executed successfully:', result);
-        } catch (error) {
-            console.error('Error executing query:', error);
-        }
+        new Promise((resolve, reject) => {
+            const query = connection.query(sql, function (err, data) {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    result = data;
+                    resolve();
+                }
+            });
+        });
     } else {
 
         console.log('회원 존재함!!');
@@ -126,12 +120,17 @@ export async function POST(NextRequest) {
     sql = `SELECT JPL_USER_ID FROM TB_JPL_USER WHERE JPL_USER_ID = ${user_id}`;
 
 
-    try {
-        await executeQuery(sql);
-        console.log('Query executed successfully:', result);
-    } catch (error) {
-        console.error('Error executing query:', error);
-    }
+    new Promise((resolve, reject) => {
+        const query = connection.query(sql, function (err, data) {
+            if (err) {
+                console.log(err);
+                reject(err);
+            } else {
+                result = data;
+                resolve();
+            }
+        });
+    });
 
     console.log(result);
     connection.end();

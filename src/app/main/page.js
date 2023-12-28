@@ -17,7 +17,7 @@ const checkEnvironment = () => {
 
 export const  MainPage = (props) => {
 
-    const handleApiCall = fetch(checkEnvironment().concat("/api/product"),{
+    const handleApiCall = fetch(checkEnvironment().concat("/api/auth/login"),{
                             method: 'GET',
                             headers: {
                             'Content-Type': 'application/json'

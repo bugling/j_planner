@@ -17,12 +17,10 @@ export const ProjectPage = (props) => {
 
     return (
         <> 
-
             {
                 session ?
                 <div className="flex justify-end"> 
                     <Image src={session.user.image} alt='useimage' width={40} height={40} className='rounded-full object-contain hidden sm:block'/>
-                    
                         <button
                             onClick={()=>signOut({callbackUrl:'/'})}
                             className="w-1/8 bg-blue-600 text-white p-2 rounded
